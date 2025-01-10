@@ -1,7 +1,8 @@
 import math
 import numpy as np
 import random
-import matplotlib
+import matplotlib.pyplot as plt
+
 
 class Connection:
     def __init__(self, connectedNeuron):
@@ -121,6 +122,9 @@ class Network:
             output.append(o)
         output.pop()
         return output
+
+    def output_network(self):
+      pass
 
 #data stored in the worst way posible 214 values stored with ID's 0 - 213
 features = [
@@ -3595,8 +3599,6 @@ def make_data_arrays(training, testing):
         temp1, temp2 = split_data(id)
         testing_data.append(temp1)
         testing_clasifications.append(temp2)
-
-#testing_training_split(0, 213, 70)
     
 def main():
     testing_training_split(0, 213, 70)
@@ -3604,11 +3606,12 @@ def main():
 
     topology = []
     topology.append(9)
-    topology.append(50)
-    topology.append(50)
-    topology.append(50)
+    topology.append(5)
+    #topology.append(5)
+    topology.append(5)
     topology.append(1)
     net = Network(topology)
+    net.output_network()
     Neuron.eta = 0.09
     Neuron.alpha = 0.015
     inputs = [[0, 0], [0, 1], [1, 0], [1, 1]]
@@ -3636,7 +3639,8 @@ def main():
             net.feedForword()
             net.backPropagate(training_clasifications[i])
             err = err + net.getError(training_clasifications[i])
-            print( "error: ", err)
+            #uncoment to see error change durring training
+            #print( "error: ", err)
         counter = counter + 1
 
     #while True:
