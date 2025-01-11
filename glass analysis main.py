@@ -69,7 +69,7 @@ class Network:
         self.layers = []
         for numNeuron in topology:
             layer = []
-            for i in range(numNeuron):
+            for i in range(1,numNeuron):
                 if (len(self.layers) == 0):
                     layer.append(Neuron(None))
                 else:
@@ -171,6 +171,8 @@ class Network:
       line_y = []
       counterx = 0
       countery = 0
+
+      
       #this is the issue here need to fix how the lines are drawn (x should be good, y needs fixing)
       #requiers start and end coordinates of lines
       for i,layer in enumerate(self.layers):
@@ -179,16 +181,18 @@ class Network:
               countery = max_hight/2 - len(layer)/2
 
               if i != len(self.layers)-1:
-                  for nnode in self.layers[i+1]:
-                      line_x.append(counterx)
-                      line_x.append(counterx+1)
-
-                  for nnode in self.layers[i+1]:
-                      line_y.append(countery)
-                      line_y.append(countery+1)
                   
+                  for nnode in self.layers[i+1]:
+                      line_x.append(counterx+i)
+                      line_x.append(counterx+1)
+                      line_x.append(None)
 
-              #line_y.append(countery)
+                  for k, nnode in enumerate(self.layers[i+1]):
+                      line_y.append(countery+j)
+                      countery_next = max_hight/2 - len(self.layers[i+1])/2
+                      line_y.append(countery_next + k)
+                      line_y.append(None)
+
               countery = countery +1
           counterx = counterx +1
 
@@ -3765,12 +3769,7 @@ def main():
     testing_training_split(0, 213, 70)
     make_data_arrays(training_ids, testing_ids)
 
-    topology = []
-    topology.append(9)
-    topology.append(5)
-    #topology.append(5)
-    topology.append(5)
-    topology.append(1)
+    topology = [9,5,5,1]
     net = Network(topology)
     net.output_network()
     Neuron.eta = 0.09
