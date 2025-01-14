@@ -176,15 +176,15 @@ class Network:
       #this is the issue here need to fix how the lines are drawn (x should be good, y needs fixing)
       #requiers start and end coordinates of lines
       for i,layer in enumerate(self.layers):
-          
+          print(f"Test 1 i = {i}")
+          countery = max_hight/2 - len(layer)/2
           for j, node in enumerate(layer):
-              countery = max_hight/2 - len(layer)/2
 
-              if i != len(self.layers)-1:
+              if i < len(self.layers)-1:
                   
                   for nnode in self.layers[i+1]:
-                      line_x.append(counterx+i)
-                      line_x.append(counterx+1)
+                      line_x.append(i)
+                      line_x.append(i+1)
                       line_x.append(None)
 
                   for k, nnode in enumerate(self.layers[i+1]):
@@ -193,7 +193,7 @@ class Network:
                       line_y.append(countery_next + k)
                       line_y.append(None)
 
-              countery = countery +1
+
           counterx = counterx +1
 
       line_trace = go.Scatter(
@@ -3812,8 +3812,8 @@ def main():
 
     net.setInput(testing_data[len(testing_clasifications)-1])
     net.feedForword()
-    print(net.getThResults())
-    print(testing_clasifications)
+    #print(net.getThResults())
+    #print(testing_clasifications)
 
 
 if __name__ == '__main__':
